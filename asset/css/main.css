@@ -1,0 +1,199 @@
+/*header*/
+.main-nav {
+    background-color: #ffc300;
+}
+.main-navbar .navbar-nav a.nav-link {
+    color: rgb(250, 18, 18);
+    font-weight: 600;
+}
+.main-nav .navbar-nav .nav-link.active, .main-nav .navbar-nav .nav-link:hover{
+    color: hsl(209, 84%, 55%);
+}
+.navbar.scrolled {
+    background-color: black;
+    transition: background-color 0.5s ease;
+    box-shadow: 5px -10px 500px #2bff00;
+}
+.navbar.scrolled h1 {
+    color: blanchedalmond;
+}
+.navbar.scrolled a.nav-link {
+    color: rgb(33, 11, 238);
+}
+.navbar img.main-logo {
+    max-width: 150px;
+}
+.navbar.navbar.scrolled img.main-logo-putih {
+    display: none;
+}
+.navbar img.main-logo-hitam {
+    display: none;
+}
+.navbar.scrolled img.main-logo-hitam {
+    display: inline-block;
+}
+.main-grey {
+    background-color: #f9f9f9;
+}
+.main-atas-judul {
+    color: #999;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+a:hover {
+    transition: color 0.3 ease;  
+}
+/*main-biru*/
+.main-biru {
+    background-color: #003566;
+    color: white;
+}
+.main-biru h2 {
+    color: #ffc300;
+}
+.col-md-4 h3 {
+    color: #ffc300;
+}
+button.btn-warning{
+    background-color: #ffc300;
+}
+h2.main-judul::after {  
+    margin: auto;
+    margin-top: 20px;
+    display: block;
+    border-bottom: 10px solid #ffc300;
+    width: 100px;
+    border-radius: 20px;
+    content: "";
+}
+/*kolaborasi*/
+#main-kolaborasi img {
+    max-height: 50px;
+    max-width: 150px;
+}
+#main-kolaborasi a {
+    display: inline-block;
+    word-spacing: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+/*untuk blog*/
+.main-blog-info img {
+    width: 50px;
+    border-radius: 50%;
+    float: left;
+}
+.main-blog-info {
+    color: #666;
+    position: relative;
+}
+.main-blog-info a {
+    padding-right: 15px;
+    color: #666;
+    text-decoration: none;
+}
+.main-blog-info a:hover {
+    color: #ffc300;  
+}
+.main-blog-info span {
+    font-size: 12px;
+    padding-left: 15px;
+}
+#blog a {
+    text-decoration: none;
+    color: #666;
+}
+#blog a:hover {
+    color: #ffc300;
+}
+#blog-detail .main-blog-info img {
+    float: none;  
+}
+#blog-detail .main-blog-info span::before {
+    content: "";
+    top: 0px;
+    margin-bottom: 3px;
+    display: inline-block;
+    margin-right: 15px;
+    background-color: #acc;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+}
+
+/*komentar footer*/
+.main-footer-menu h3 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+.main-footer-menu a {
+    color: #fff;
+    text-decoration: none;
+}
+.main-footer-menu a:hover {
+    color: #ffc300;
+}
+.main-footer-menu ul {
+    list-style-type: none;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+.main-footer-menu ul li {
+    margin-bottom: 10px;
+}
+.main-footer-copyright {
+    background-color: black;
+    color: #fff;
+}
+ a {
+     color: inherit;
+     text-decoration: none;
+ }
+.medsos {
+    padding: 1px 0;
+    background-color: #003566;
+}
+.medsos ul li {
+    display: inline-block;
+    color: white;
+    margin: 10px;
+}
+a :hover {
+    color: #2bff00;
+}
+.col-lg-3 h3 {
+    color: #ffc300;
+}
+.banner {
+    height:60vh;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner:after {
+    content:"";
+    display: block;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
+    background-color: rgba(110, 109, 221, 0.5);
+}
+.col-md-4 p :hover {
+    color: #ffc300;
+
+}
+.service {
+	background-color: #ffc300;
+}
+.box .col-4 {
+	width: 25%;
+	padding: 20px;
+	box-sizing: border-box;
+	text-align: center;
+	float: left;
+}
