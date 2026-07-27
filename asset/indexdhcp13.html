@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentasi Konfigurasi DHCP - Antigravity</title>
+    <!-- Modern Font: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Background Animation -->
+        <div class="bg-shape shape1"></div>
+        <div class="bg-shape shape2"></div>
+        <div class="bg-shape shape3"></div>
+
+        <!-- Slides Wrapper -->
+        <div class="slides" id="slides">
+            
+            <!-- Slide 1: Title -->
+            <section class="slide active">
+                <div class="glass-card text-center">
+                    <div class="icon-hero">🐧</div>
+                    <h1 class="gradient-text">Konfigurasi DHCP Server</h1>
+                    <h2>Panduan Praktis pada Sistem Operasi Debian 13</h2>
+                    <p class="subtitle">Menggunakan isc-dhcp-server</p>
+                    <div class="author">Disusun oleh AI Assistant</div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Persiapan Awal -->
+            <section class="slide">
+                <div class="glass-card">
+                    <h2>📋 Persiapan Awal (IP Statis)</h2>
+                    <p>DHCP server wajib memiliki IP statis (tetap). Ubah konfigurasi <em>network interfaces</em> server Anda.</p>
+                    <p>Buka file konfigurasi:</p>
+                    <code>sudo nano /etc/network/interfaces</code>
+                    <div class="highlight-box">
+                        <pre style="color: #e2e8f0; margin: 0; font-family: monospace;">auto enp0s3
+iface enp0s3 inet static
+    address 192.168.10.1
+    netmask 255.255.255.0</pre>
+                    </div>
+                    <p class="mt-4">Setelah itu, restart jaringan dengan <code>sudo systemctl restart networking</code>.</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Langkah 1 -->
+            <section class="slide">
+                <div class="glass-card">
+                    <h2>🛠️ Langkah 1: Install Paket</h2>
+                    <p>Lakukan update pada repositori sistem Anda dan install paket <strong>isc-dhcp-server</strong>.</p>
+                    <div class="highlight-box">
+                        <pre style="color: #e2e8f0; margin: 0; font-family: monospace;">sudo apt update
+sudo apt install isc-dhcp-server -y</pre>
+                    </div>
+                    <p class="mt-4">Paket ini adalah program standar yang akan menyebarkan IP Address secara otomatis ke seluruh komputer klien di jaringan Anda.</p>
+                </div>
+            </section>
+
+            <!-- Slide 4: Langkah 2 -->
+            <section class="slide">
+                <div class="glass-card">
+                    <h2>🛠️ Langkah 2: Tentukan Antarmuka (Interface)</h2>
+                    <p>Kita harus memberi tahu DHCP server, port/antarmuka mana yang akan digunakan untuk menyebarkan IP.</p>
+                    <p>Buka file default DHCP:</p>
+                    <code>sudo nano /etc/default/isc-dhcp-server</code>
+                    <p class="mt-4">Cari baris <code>INTERFACESv4</code> dan isikan nama antarmuka Anda (contoh: <code>enp0s3</code>):</p>
+                    <div class="highlight-box">
+                        <pre style="color: #e2e8f0; margin: 0; font-family: monospace;">INTERFACESv4="enp0s3"</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Langkah 3A -->
+            <section class="slide">
+                <div class="glass-card">
+                    <h2>🛠️ Langkah 3A: Aktifkan Authoritative</h2>
+                    <p>Langkah selanjutnya adalah mengatur konfigurasi utama DHCP. Buka filenya:</p>
+                    <code>sudo nano /etc/dhcp/dhcpd.conf</code>
+                    <p class="mt-4">Cari baris <code>#authoritative;</code> (biasanya di bagian atas), kemudian <strong>hilangkan tanda pagarnya</strong> (#) sehingga menjadi:</p>
+                    <div class="highlight-box success">
+                        <pre style="color: #e2e8f0; margin: 0; font-family: monospace;">authoritative;</pre>
+                    </div>
+                    <p class="mt-4">Hal ini menjadikan server Debian Anda sebagai pusat DHCP utama di jaringan lokal yang Anda kelola.</p>
+                </div>
+            </section>
+
+            <!-- Slide 6: Langkah 3B -->
+            <section class="slide">
+                <div class="glass-card">
+                    <h2>🛠️ Langkah 3B: Konfigurasi Subnet</h2>
+                    <p>Pada file yang sama (di bagian paling bawah), tambahkan blok subnet berikut untuk membagikan IP Address (contoh range 10-50):</p>
+                    <div class="highlight-box">
+                        <pre style="color: #e2e8f0; margin: 0; font-family: monospace; font-size: 0.95rem;">subnet 192.168.10.0 netmask 255.255.255.0 {
+  range 192.168.10.10 192.168.10.50;
+  option domain-name-servers 8.8.8.8, 8.8.4.4;
+  option domain-name "jaringan.lokal";
+  option routers 192.168.10.1;
+  option broadcast-address 192.168.10.255;
+  default-lease-time 600;
+  max-lease-time 7200;
+}</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Langkah 4 -->
+            <section class="slide">
+                <div class="glass-card">
+                    <h2>🛠️ Langkah 4: Restart & Cek Status</h2>
+                    <p>Simpan konfigurasi Anda, lalu terapkan perubahan dengan melakukan restart service DHCP:</p>
+                    <code>sudo systemctl restart isc-dhcp-server</code>
+                    <p class="mt-4">Pastikan layanannya berjalan normal (tanpa error) dengan perintah:</p>
+                    <code>sudo systemctl status isc-dhcp-server</code>
+                    <div class="highlight-box success mt-4">
+                        Status harus menunjukkan tulisan <strong style="color: #10b981;">active (running)</strong>.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Pengujian -->
+            <section class="slide">
+                <div class="glass-card">
+                    <h2>💻 Pengujian di Komputer Klien</h2>
+                    <ul class="styled-list mt-4">
+                        <li>Hubungkan komputer klien (Windows/Linux) ke jaringan yang sama dengan server.</li>
+                        <li>Pastikan pengaturan IP Address di komputer klien diubah menjadi <strong>Obtain an IP address automatically (DHCP)</strong>.</li>
+                        <li>Cek IP Address klien (bisa lewat <code>ipconfig</code> di Windows). Klien seharusnya mendapatkan IP antara <strong>192.168.10.10</strong> hingga <strong>192.168.10.50</strong>.</li>
+                    </ul>
+                    <div class="highlight-box success mt-4">
+                        🎉 Konfigurasi Selesai! Klien Anda sudah terhubung secara otomatis.
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="prevBtn" class="control-btn" disabled>
+                <!-- Arrow Left SVG -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="progress-indicator">
+                <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
+            </div>
+            <button id="nextBtn" class="control-btn">
+                <!-- Arrow Right SVG -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
